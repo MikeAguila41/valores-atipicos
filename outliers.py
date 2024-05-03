@@ -56,10 +56,12 @@ plt.boxplot(data_clean_iqr["ventas_precios_corrientes"])
 plt.title("Outliers de ventas_precios_corrientes")
 plt.show() #dibujamos el diagrama
 
-#histograma
+#histograma con datos limpios
 fig = plt.figure(figsize =(7, 3))
 plt.hist(x = data_clean_iqr["ventas_precios_corrientes"], color='blue', rwidth=0.50)
 plt.title('Histograma de ventas_precios_corrientes sin outliers')
 plt.xlabel('ventas_precios_corrientes')
 plt.ylabel('Frecuencia')
 plt.show()
+
+data_clean_iqr["ventas_precios_corrientes"].to_csv('ventas_precios_corrientes.csv')
