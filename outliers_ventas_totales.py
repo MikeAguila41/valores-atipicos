@@ -91,9 +91,170 @@ plt.show()
 #Realizamos diagrama de caja o bigote con datos limpios con desv_std
 fig = plt.figure(figsize =(5, 3))
 plt.boxplot(data_clean_iqr_desv_std["ventas_precios_corrientes"]) 
-plt.title("Outliers de ventas_precios_corrientes (método cuartiles)")
+plt.title("Outliers de ventas_precios_corrientes (método desv_std)")
 #plt.show() #dibujamos el diagrama
 
 data_clean_iqr["ventas_precios_corrientes"].to_csv('ventas_precios_corrientes.csv')
 # se utiliza el método de quartiles para la columna 'ventas_precios_corrientes' ya que no elimina los nulos con las desv-std
 
+# columna 'ventas_precios_constantes'
+#histograma
+fig = plt.figure(figsize =(7, 3))
+plt.hist(x=df["ventas_precios_constantes"], color='red', rwidth=0.50)
+plt.title('Histograma de ventas_precios_constantes con outliers')
+plt.xlabel('ventas_precios_constantes')
+plt.ylabel('Frecuencia')
+#plt.show()
+
+#gráfica de caja
+fig = plt.figure(figsize =(5, 3))
+plt.boxplot(df["ventas_precios_constantes"]) 
+plt.title("Outliers de ventas_precios_constantes")
+#plt.show()
+
+#Método aplicando Cuartiles. Encuentro cuartiles 0.25 y 0.75
+y = df["ventas_precios_constantes"]
+#print(y)
+percentile25 = y.quantile(0.25) #Q1
+percentile75 = y.quantile(0.75) #Q3
+#print(percentile25)
+#print(percentile75)
+iqr = percentile75 - percentile25
+#print(iqr)
+
+Limite_Superior_iqr = percentile75 + 1.5*iqr
+Limite_Inferior_iqr = percentile25 - 1.5*iqr
+print("Limite superior permitido usando cuartiles ", Limite_Superior_iqr)
+print("Limite inferior permitido usando cuartiles ", Limite_Inferior_iqr)
+
+#Encontramos Ouliers
+outliers_iqr= df[(y>Limite_Superior_iqr)|(y<Limite_Inferior_iqr)]
+outliers_iqr
+
+#Obtenemos datos limpios
+data_clean_iqr = df[(y < Limite_Superior_iqr)&(y > Limite_Inferior_iqr)]
+#print(data_clean_iqr)
+
+#Realizamos diagrama de caja o bigote con datos limpios
+fig = plt.figure(figsize =(5, 3))
+plt.boxplot(data_clean_iqr["ventas_precios_constantes"]) 
+plt.title("Outliers de ventas_precios_constantes (método cuartiles)")
+#plt.show() #dibujamos el diagrama
+
+#histograma con datos limpios
+fig = plt.figure(figsize =(7, 3))
+plt.hist(x = data_clean_iqr["ventas_precios_constantes"], color='blue', rwidth=0.50)
+plt.title('Histograma de ventas_precios_constantes sin outliers (método de cuartiles)')
+plt.xlabel('ventas_precios_constantes')
+plt.ylabel('Frecuencia')
+#plt.show()
+
+#Método aplicando desviación estandar. Encuentro los valores extremos
+y = df["ventas_precios_constantes"]
+#print(y)
+Limite_Superior_desv_std = y.mean() + 3*y.std() #La fòrumla es 3 veces
+Limite_Inferior_desv_std = y.mean() - 3*y.std()
+print("Limite superior permitido utilizando desviación estándar ", Limite_Superior_desv_std)
+print("Limite inferior permitido utilizando desviación estándar ", Limite_Inferior_desv_std)
+
+#Obtenemos datos limpios
+data_clean_iqr_desv_std = df[(y < Limite_Superior_desv_std)&(y > Limite_Inferior_desv_std)]
+print(data_clean_iqr)
+
+#histograma con desviación estándar
+fig = plt.figure(figsize =(7, 3))
+plt.hist(x = data_clean_iqr_desv_std["ventas_precios_constantes"], color='green', rwidth=0.50)
+plt.title('Histograma de ventas_precios_constantes con desviación estándar')
+plt.xlabel('ventas_precios_constantes')
+plt.ylabel('Frecuencia')
+plt.show()
+
+#Realizamos diagrama de caja o bigote con datos limpios con desv_std
+fig = plt.figure(figsize =(5, 3))
+plt.boxplot(data_clean_iqr_desv_std["ventas_precios_constantes"]) 
+plt.title("Outliers de ventas_precios_constantes (método des_std)")
+#plt.show() #dibujamos el diagrama
+
+data_clean_iqr["ventas_precios_constantes"].to_csv('ventas_precios_constantes.csv')
+# se utiliza el método de quartiles para la columna 'ventas_precios_constantes' ya que no elimina los nulos con las desv-std
+
+# columna 'ventas_totales_canal_venta'
+#histograma
+fig = plt.figure(figsize =(7, 3))
+plt.hist(x=df["ventas_totales_canal_venta"], color='red', rwidth=0.50)
+plt.title('Histograma de ventas_totales_canal_venta con outliers')
+plt.xlabel('ventas_totales_canal_venta')
+plt.ylabel('Frecuencia')
+#plt.show()
+
+#gráfica de caja
+fig = plt.figure(figsize =(5, 3))
+plt.boxplot(df["ventas_totales_canal_venta"]) 
+plt.title("Outliers de ventas_totales_canal_venta")
+#plt.show()
+
+#Método aplicando Cuartiles. Encuentro cuartiles 0.25 y 0.75
+y = df["ventas_totales_canal_venta"]
+#print(y)
+percentile25 = y.quantile(0.25) #Q1
+percentile75 = y.quantile(0.75) #Q3
+#print(percentile25)
+#print(percentile75)
+iqr = percentile75 - percentile25
+#print(iqr)
+
+Limite_Superior_iqr = percentile75 + 1.5*iqr
+Limite_Inferior_iqr = percentile25 - 1.5*iqr
+print("Limite superior permitido usando cuartiles ", Limite_Superior_iqr)
+print("Limite inferior permitido usando cuartiles ", Limite_Inferior_iqr)
+
+#Encontramos Ouliers
+outliers_iqr= df[(y>Limite_Superior_iqr)|(y<Limite_Inferior_iqr)]
+outliers_iqr
+
+#Obtenemos datos limpios
+data_clean_iqr = df[(y < Limite_Superior_iqr)&(y > Limite_Inferior_iqr)]
+#print(data_clean_iqr)
+
+#Realizamos diagrama de caja o bigote con datos limpios
+fig = plt.figure(figsize =(5, 3))
+plt.boxplot(data_clean_iqr["ventas_totales_canal_venta"]) 
+plt.title("Outliers de ventas_totales_canal_venta (método cuartiles)")
+#plt.show() #dibujamos el diagrama
+
+#histograma con datos limpios
+fig = plt.figure(figsize =(7, 3))
+plt.hist(x = data_clean_iqr["ventas_totales_canal_venta"], color='blue', rwidth=0.50)
+plt.title('Histograma de ventas_totales_canal_venta sin outliers (método de cuartiles)')
+plt.xlabel('ventas_totales_canal_venta')
+plt.ylabel('Frecuencia')
+#plt.show()
+
+#Método aplicando desviación estandar. Encuentro los valores extremos
+y = df["ventas_totales_canal_venta"]
+#print(y)
+Limite_Superior_desv_std = y.mean() + 3*y.std() #La fòrumla es 3 veces
+Limite_Inferior_desv_std = y.mean() - 3*y.std()
+print("Limite superior permitido utilizando desviación estándar ", Limite_Superior_desv_std)
+print("Limite inferior permitido utilizando desviación estándar ", Limite_Inferior_desv_std)
+
+#Obtenemos datos limpios
+data_clean_iqr_desv_std = df[(y < Limite_Superior_desv_std)&(y > Limite_Inferior_desv_std)]
+print(data_clean_iqr)
+
+#histograma con desviación estándar
+fig = plt.figure(figsize =(7, 3))
+plt.hist(x = data_clean_iqr_desv_std["ventas_totales_canal_venta"], color='green', rwidth=0.50)
+plt.title('Histograma de ventas_totales_canal_venta con desviación estándar')
+plt.xlabel('ventas_totales_canal_venta')
+plt.ylabel('Frecuencia')
+plt.show()
+
+#Realizamos diagrama de caja o bigote con datos limpios con desv_std
+fig = plt.figure(figsize =(5, 3))
+plt.boxplot(data_clean_iqr_desv_std["ventas_totales_canal_venta"]) 
+plt.title("Outliers de ventas_totales_canal_venta (método desv_std)")
+#plt.show() #dibujamos el diagrama
+
+data_clean_iqr["ventas_totales_canal_venta"].to_csv('ventas_totales_canal_venta.csv')
+# se utiliza el método de quartiles para la columna 'ventas_totales_canal_venta' ya que no elimina los nulos con las desv-std
