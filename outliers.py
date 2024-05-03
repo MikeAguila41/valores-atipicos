@@ -18,8 +18,8 @@ valores_nulos = df.isnull().sum()
 
 #histograma
 fig = plt.figure(figsize =(7, 3))
-plt.hist(x=df["ventas_precios_corrientes"], color='blue', rwidth=0.50)
-plt.title('Histograma de ventas_precios_corrientes')
+plt.hist(x=df["ventas_precios_corrientes"], color='red', rwidth=0.50)
+plt.title('Histograma de ventas_precios_corrientes con outliers')
 plt.xlabel('ventas_precios_corrientes')
 plt.ylabel('Frecuencia')
 plt.show()
@@ -47,11 +47,19 @@ outliers_iqr= df[(y>Limite_Superior_iqr)|(y<Limite_Inferior_iqr)]
 outliers_iqr
 
 #Obtenemos datos limpios
-data_clean_iqr= df[(y<=Limite_Superior_iqr)&(y>=Limite_Inferior_iqr)]
-data_clean_iqr
+data_clean_iqr = df[(y < Limite_Superior_iqr)&(y > Limite_Inferior_iqr)]
+print(data_clean_iqr)
 
-#Realizamos diagrama de caja o bigote
+#Realizamos diagrama de caja o bigote con datos limpios
 fig = plt.figure(figsize =(5, 3))
 plt.boxplot(data_clean_iqr["ventas_precios_corrientes"]) 
 plt.title("Outliers de ventas_precios_corrientes")
 plt.show() #dibujamos el diagrama
+
+#histograma
+fig = plt.figure(figsize =(7, 3))
+plt.hist(x = data_clean_iqr["ventas_precios_corrientes"], color='blue', rwidth=0.50)
+plt.title('Histograma de ventas_precios_corrientes sin outliers')
+plt.xlabel('ventas_precios_corrientes')
+plt.ylabel('Frecuencia')
+plt.show()
